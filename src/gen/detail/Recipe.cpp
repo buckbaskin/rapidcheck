@@ -16,7 +16,7 @@ Seq<Recipe> shrinkRecipe(const Recipe &recipe) {
         return seq::map(recipe.ingredients[i].shrinkable.shrinks(),
                         [=](Shrinkable<Any> &&shrink) {
                           Recipe shrunkRecipe(recipe);
-                          const auto it = begin(shrunkRecipe.ingredients) + i;
+                          const auto it = std::advance(begin(shrunkRecipe.ingredients), i);
                           it->shrinkable = std::move(shrink);
                           shrunkRecipe.ingredients.erase(
                               it + 1, end(shrunkRecipe.ingredients));
