@@ -13,7 +13,7 @@ class Random;
 /// This applies to, for example, generation of numbers but not to the
 /// generation of collection where there is an associated cost to generating
 /// large collections.
-constexpr int kNominalSize = 100;
+constexpr size_t kNominalSize = 100;
 
 /// This class is the type of RapidCheck generators. A generator is essentially
 /// a function which takes a `Random` and some generation parameters and returns
