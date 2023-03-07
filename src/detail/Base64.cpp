@@ -30,7 +30,7 @@ const char *kBase64Alphabet =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+_";
 
 std::string base64Encode(const std::vector<std::uint8_t> &data) {
-  const auto size = data.size();
+  const std::size_t size = data.size();
   const auto outputSize = (size * 4 + 2) / 3;
   std::string output;
   output.reserve(outputSize);
@@ -64,7 +64,7 @@ std::vector<std::uint8_t> base64Decode(const std::string &data) {
                          "Invalid number of characters for Base64");
   }
 
-  const auto size = data.size();
+  const std::size_t size = data.size();
   const auto outputSize = (size * 3) / 4;
   std::vector<std::uint8_t> output;
   output.reserve(outputSize);
