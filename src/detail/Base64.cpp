@@ -30,7 +30,7 @@ const char *kBase64Alphabet =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+_";
 
 std::string base64Encode(const std::vector<std::uint8_t> &data) {
-  const std::size_t size = data.size();
+  const auto size = data.size();
   const auto outputSize = (size * 4 + 2) / 3;
   std::string output;
   output.reserve(outputSize);
@@ -39,7 +39,7 @@ std::string base64Encode(const std::vector<std::uint8_t> &data) {
     size_t nbits = 0;
     std::uint32_t bits = 0;
     for (std::size_t j = i; j < std::min<std::size_t>(size, i + 3); j++) {
-      bits |= data[j] << nbits;
+      bits |= static_cast<std::uint32_t>(data[j] << nbits);
       nbits += 8;
     }
 
@@ -64,7 +64,7 @@ std::vector<std::uint8_t> base64Decode(const std::string &data) {
                          "Invalid number of characters for Base64");
   }
 
-  const std::size_t size = data.size();
+  const auto size = data.size();
   const auto outputSize = (size * 3) / 4;
   std::vector<std::uint8_t> output;
   output.reserve(outputSize);
@@ -77,7 +77,7 @@ std::vector<std::uint8_t> base64Decode(const std::string &data) {
       if (x == -1) {
         throw ParseException(j, "Invalid Base64 character");
       }
-      bits |= x << nbits;
+      bits |= static_cast<std::uint32_t>(x << nbits);
       nbits += 6;
     }
 
