@@ -29,6 +29,11 @@ private:
 template<typename NarrowFrom>
 typename std::make_unsigned<NarrowFrom>::type makeUnsigned(NarrowFrom value);
 
+/// Casts a value from an unsigned type to a signed type
+/// Raises a SerializationException if the narrowing would change the value
+template<typename NarrowFrom>
+typename std::make_signed<NarrowFrom>::type makeSigned(NarrowFrom value);
+
 /// Serializes the given integer value in little-endian format.
 template <typename T,
           typename Iterator,

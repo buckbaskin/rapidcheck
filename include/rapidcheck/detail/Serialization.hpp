@@ -17,6 +17,20 @@ typename std::make_unsigned<NarrowFrom>::type makeUnsigned(NarrowFrom value) {
   return static_cast<typename std::make_unsigned<NarrowFrom>::type>(value);
 }
 
+template<typename NarrowFrom>
+typename std::make_signed<NarrowFrom>::type makeSigned(NarrowFrom value) {
+  using DestType = std::make_signed<NarrowFrom>::type;
+
+  static_assert(std::is_integral<NarrowFrom>::value);
+  static_assert(std::is_unsigned<NarrowFrom>::value);
+
+  if (value > static_cast<NarrowFrom>(std::numeric_limits<DestType>::max())) {
+      throw SerializationException("Narrowing value above target range");
+  }
+
+  return static_cast<DestType>(value);
+}
+
 template <typename T, typename Iterator, typename>
 Iterator serialize(T value, Iterator output) {
   using UInt = typename std::make_unsigned<T>::type;
@@ -72,7 +86,7 @@ Iterator deserialize(Iterator begin, Iterator end, std::string &output) {
       throw SerializationException("Unexpected end of input");
     }
 
-    output.push_back(*iit);
+    output.push_back(makeSigned(*iit));
     iit++;
   }
 
