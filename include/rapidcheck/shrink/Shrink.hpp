@@ -26,7 +26,7 @@ public:
       return Nothing;
     }
 
-    T ret = narrowTo<T>(m_down ? (m_value - m_diff) : (m_value + m_diff));
+    T ret = m_down ? (m_value - m_diff) : (m_value + m_diff);
     m_diff /= 2;
     return ret;
   }

@@ -24,10 +24,10 @@ private:
   std::string m_msg;
 };
 
-/// Casts a value from one itegral type to another.
+/// Casts a value from a signed type to an unsigned type
 /// Raises a SerializationException if the narrowing would change the value
-template<typename NarrowTo, typename NarrowFrom>
-NarrowTo narrowTo(NarrowFrom value);
+template<typename NarrowFrom>
+std::make_unsigned<NarrowFrom>::type makeUnsigned(NarrowFrom value);
 
 /// Serializes the given integer value in little-endian format.
 template <typename T,

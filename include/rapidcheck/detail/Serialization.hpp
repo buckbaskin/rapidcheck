@@ -5,19 +5,18 @@
 namespace rc {
 namespace detail {
 
-template<typename NarrowTo, typename NarrowFrom>
-NarrowTo narrowTo(NarrowFrom value) {
+template<typename NarrowFrom>
+std::make_unsigned<NarrowFrom>::type makeUnsigned(NarrowFrom value) {
   static_assert(std::is_integral<NarrowFrom>::value);
   static_assert(std::is_integral<NarrowTo>::value);
+  static_assert(std::is_signed<NarrowFrom>::value);
+  static_assert(std::is_unsigned<NarrowTo>::value);
 
-  if (value > std::numeric_limits<NarrowTo>::max()) {
-      throw SerializationException("Narrowing value above target range");
-  }
-  if (value < std::numeric_limits<NarrowTo>::min()) {
+  if (value < 0) {
       throw SerializationException("Narrowing value below target range");
   }
 
-  return static_cast<NarrowTo>(value);
+  return static_cast<std::make_unsigned<NarrowFrom>::type>(value);
 }
 
 template <typename T, typename Iterator, typename>
@@ -75,7 +74,7 @@ Iterator deserialize(Iterator begin, Iterator end, std::string &output) {
       throw SerializationException("Unexpected end of input");
     }
 
-    output.push_back(narrowTo<char>(*iit));
+    output.push_back(*iit);
     iit++;
   }
 
@@ -219,7 +218,7 @@ template <typename InputIterator, typename OutputIterator>
 OutputIterator
 serializeCompact(InputIterator begin, InputIterator end, OutputIterator output) {
   auto dist = std::distance(begin, end);
-  const std::uint64_t numElements = narrowTo<std::uint64_t>(dist);
+  const std::uint64_t numElements = makeUnsigned(dist);
   auto oit = serializeCompact(numElements, output);
   for (auto it = begin; it != end; it++) {
     oit = serializeCompact(*it, oit);
