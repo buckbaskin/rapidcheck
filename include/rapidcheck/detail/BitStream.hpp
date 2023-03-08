@@ -57,11 +57,7 @@ T BitStream<Source>::next(int nbits, std::false_type) {
 
     const auto n = std::min(m_numBits, wantBits);
     const auto bits = m_bits & bitMask<SourceType>(n);
-    if (std::is_signed<T>::value) {
-        value = value | bits << (nbits - wantBits);
-    } else {
-        value = value | makeUnsigned(bits << (nbits - wantBits));
-    }
+    value = value | (bits << (nbits - wantBits) + T{});
     // To avoid right-shifting data beyond the width of the given type (which is
     // undefined behavior, because of course it is) only perform this shift-
     // assignment if we have room.
