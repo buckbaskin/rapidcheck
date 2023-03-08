@@ -26,7 +26,7 @@ public:
       : m_initialState(std::forward<InitialStateArg>(initialState))
       , m_genFunc(std::forward<GenFuncArg>(genFunc)) {}
 
-  Shrinkable<Commands<Cmd>> operator()(const Random &random, int size) const {
+  Shrinkable<Commands<Cmd>> operator()(const Random &random, size_t size) const {
     auto sequenceShrinkable = shrinkable::shrinkRecur(
         CommandSequence(m_initialState, random, m_genFunc, size),
         [](const CommandSequence &commandSequence) {

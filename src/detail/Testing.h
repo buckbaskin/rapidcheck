@@ -26,7 +26,7 @@ struct SearchResult {
     Shrinkable<CaseDescription> shrinkable;
 
     /// The size at which the property failed.
-    int size;
+    size_t size;
 
     /// The Random state which produced the failure.
     Random random;

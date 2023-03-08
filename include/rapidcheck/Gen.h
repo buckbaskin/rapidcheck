@@ -42,7 +42,7 @@ public:
   /// @param size    The generation size
   ///
   /// @return a random generated `Shrinkable`
-  Shrinkable<T> operator()(const Random &random, int size = kNominalSize) const
+  Shrinkable<T> operator()(const Random &random, size_t size = kNominalSize) const
       noexcept;
 
   /// The meaning of this operator depends on the context in which it is used
