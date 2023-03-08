@@ -36,7 +36,7 @@ extern template Shrinkable<unsigned long long>
 integral<unsigned long long>(const Random &random, int size);
 
 template <typename T>
-Shrinkable<T> real(const Random &random, int size) {
+Shrinkable<T> real(const Random &random, std::size_t size) {
   // TODO this implementation sucks
   auto stream = rc::detail::bitStreamOf(random);
   const double scale =
