@@ -8,9 +8,7 @@ namespace detail {
 template<typename NarrowFrom>
 typename std::make_unsigned<NarrowFrom>::type makeUnsigned(NarrowFrom value) {
   static_assert(std::is_integral<NarrowFrom>::value);
-  static_assert(std::is_integral<NarrowTo>::value);
   static_assert(std::is_signed<NarrowFrom>::value);
-  static_assert(std::is_unsigned<NarrowTo>::value);
 
   if (value < 0) {
       throw SerializationException("Narrowing value below target range");
