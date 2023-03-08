@@ -19,7 +19,7 @@ typename std::make_unsigned<NarrowFrom>::type makeUnsigned(NarrowFrom value) {
 
 template<typename NarrowFrom>
 typename std::make_signed<NarrowFrom>::type makeSigned(NarrowFrom value) {
-  using DestType = std::make_signed<NarrowFrom>::type;
+  using DestType = typename std::make_signed<NarrowFrom>::type;
 
   static_assert(std::is_integral<NarrowFrom>::value);
   static_assert(std::is_unsigned<NarrowFrom>::value);
