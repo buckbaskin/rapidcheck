@@ -6,7 +6,7 @@ namespace rc {
 namespace detail {
 
 template<typename NarrowFrom>
-std::make_unsigned<NarrowFrom>::type makeUnsigned(NarrowFrom value) {
+typename std::make_unsigned<NarrowFrom>::type makeUnsigned(NarrowFrom value) {
   static_assert(std::is_integral<NarrowFrom>::value);
   static_assert(std::is_integral<NarrowTo>::value);
   static_assert(std::is_signed<NarrowFrom>::value);
@@ -16,7 +16,7 @@ std::make_unsigned<NarrowFrom>::type makeUnsigned(NarrowFrom value) {
       throw SerializationException("Narrowing value below target range");
   }
 
-  return static_cast<std::make_unsigned<NarrowFrom>::type>(value);
+  return static_cast<typename std::make_unsigned<NarrowFrom>::type>(value);
 }
 
 template <typename T, typename Iterator, typename>
