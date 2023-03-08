@@ -122,7 +122,7 @@ public:
 
   std::string message() const { return m_msg; }
 
-  const char what() const noexcept override {
+  const char *what() const noexcept override {
     return m_msg.c_str();
   }
 
