@@ -118,12 +118,14 @@ public:
   /// C-tor.
   ///
   /// @param msg  A message describing the sign error.
-  SignException(const std::string &msg);
+  SignException(const std::string &msg) : m_msg(msg) {}
 
-  /// Returns the message.
-  std::string message() const;
+  std::string message() const { return m_msg; }
 
-  const char *what() const noexcept override;
+  const char what() const noexcept override {
+    return m_msg.c_str();
+  }
+
 
 private:
   std::string m_msg;
@@ -137,7 +139,7 @@ typename std::make_unsigned<NarrowFrom>::type makeUnsigned(NarrowFrom value) {
   static_assert(std::is_signed<NarrowFrom>::value);
 
   if (value < 0) {
-      throw SerializationException("Narrowing value below target range");
+      throw SignException("Narrowing value below target range");
   }
 
   return static_cast<typename std::make_unsigned<NarrowFrom>::type>(value);
@@ -153,7 +155,7 @@ typename std::make_signed<NarrowFrom>::type makeSigned(NarrowFrom value) {
   static_assert(std::is_unsigned<NarrowFrom>::value);
 
   if (value > static_cast<NarrowFrom>(std::numeric_limits<DestType>::max())) {
-      throw SerializationException("Narrowing value above target range");
+      throw SignException("Narrowing value above target range");
   }
 
   return static_cast<DestType>(value);
