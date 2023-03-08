@@ -36,10 +36,10 @@ struct SearchResult {
   Type type;
 
   /// The number of successful test cases.
-  int numSuccess;
+  std::size_t numSuccess;
 
   /// The number of discarded test cases.
-  int numDiscarded;
+  std::size_t numDiscarded;
 
   /// The tags of successful test cases.
   std::vector<Tags> tags;
