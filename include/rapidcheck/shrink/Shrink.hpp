@@ -56,8 +56,8 @@ public:
     elements.reserve(m_elements.size() - m_size);
     const auto start = begin(m_elements);
     const auto fin = end(m_elements);
-    elements.insert(end(elements), start, start + makeSigned(m_start));
-    elements.insert(end(elements), start + makeSigned(m_start) + makeSigned(m_size), fin);
+    elements.insert(end(elements), start, start + rc::detail::makeSigned(m_start));
+    elements.insert(end(elements), start + rc::detail::makeSigned(m_start) + rc::detail::makeSigned(m_size), fin);
 
     if ((m_size + m_start) >= m_elements.size()) {
       m_size--;
