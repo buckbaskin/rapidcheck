@@ -60,7 +60,10 @@ Iterator deserialize(Iterator begin, Iterator end, std::string &output) {
       throw SerializationException("Unexpected end of input");
     }
 
-    output.push_back(*iit);
+    if (*iit > std::numeric_limits<char>::max()) {
+      throw SerializationException("Decoded Char out of range for std::string output");
+    }
+    output.push_back(static_cast<char>(*iit));
     iit++;
   }
 
@@ -203,7 +206,11 @@ Iterator deserializeCompact(Iterator begin, Iterator end, T &output) {
 template <typename InputIterator, typename OutputIterator>
 OutputIterator
 serializeCompact(InputIterator begin, InputIterator end, OutputIterator output) {
-  const std::uint64_t numElements = std::distance(begin, end);
+  auto dist = std::distance(begin, end);
+  if (dist < 0) {
+      throw SerializationException("serializeCompact called with end before begin");
+  }
+  const std::uint64_t numElements = static_cast<std::uint64_t>(dist);
   auto oit = serializeCompact(numElements, output);
   for (auto it = begin; it != end; it++) {
     oit = serializeCompact(*it, oit);
