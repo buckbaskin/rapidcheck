@@ -19,7 +19,7 @@ public:
 
   TowardsSeq(T value, T target)
       : m_value(value)
-      , m_diff(makeUnsigned((target < value) ? (value - target) : (target - value)))
+      , m_diff(rc::detail::makeUnsigned((target < value) ? (value - target) : (target - value)))
       , m_down(target < value) {}
 
   Maybe<T> operator()() {
@@ -27,7 +27,8 @@ public:
       return Nothing;
     }
 
-    T ret = m_down ? (m_value - m_diff) : (m_value + m_diff);
+    // Value and Target are both representable by T, so all values between them are also
+    T ret = static_cast<T>(m_down ? (m_value - m_diff) : (m_value + m_diff));
     m_diff /= 2;
     return ret;
   }
