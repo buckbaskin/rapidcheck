@@ -6,6 +6,7 @@
 #include "rapidcheck/seq/Transform.h"
 #include "rapidcheck/seq/Create.h"
 #include "rapidcheck/Compat.h"
+#include "rapidcheck/detail/Utility.h"
 
 namespace rc {
 namespace shrink {
@@ -18,7 +19,7 @@ public:
 
   TowardsSeq(T value, T target)
       : m_value(value)
-      , m_diff(narrowto<UInt>((target < value) ? (value - target) : (target - value)))
+      , m_diff(makeUnsigned((target < value) ? (value - target) : (target - value)))
       , m_down(target < value) {}
 
   Maybe<T> operator()() {
