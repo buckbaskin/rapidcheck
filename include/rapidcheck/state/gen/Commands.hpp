@@ -81,7 +81,7 @@ private:
     CommandSequence(const MakeInitialState &initState,
                     const Random &random,
                     const GenFunc &func,
-                    int sz)
+                    size_t sz)
         : m_initialState(initState)
         , m_genFunc(func)
         , m_size(sz) {
@@ -240,7 +240,7 @@ private:
 
     MakeInitialState m_initialState;
     GenFunc m_genFunc;
-    int m_size;
+    size_t m_size;
     std::vector<CommandEntry> m_entries;
   };
 

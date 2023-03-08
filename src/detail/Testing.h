@@ -17,7 +17,7 @@ struct SearchResult {
 
   /// Represents information about a failure.
   struct Failure {
-    Failure(Shrinkable<CaseDescription> shr, int sz, const Random &rnd)
+    Failure(Shrinkable<CaseDescription> shr, size_t sz, const Random &rnd)
         : shrinkable(shr)
         , size(sz)
         , random(rnd) {}
